@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>- Enter Sillyland Berlesque Troope - </title>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script> 
+<script type="text/javascript" src="https://github.com/malsup/form/raw/master/jquery.form.js"></script> 
+
+<script type="text/javascript"> 
+	// wait for the DOM to be loaded 
+	/*$(document).ready(function() { 
+		// bind 'showtime-form' and provide a simple callback function 
+		$('#showtime-form').ajaxForm(function() { 
+			alert("Thank you for your comment!"); 
+		}); 
+	}); */
+	
+	// prepare the form when the DOM is ready 
+	$(document).ready(function() { 
+		var options = { 
+			target:        '#formFrame',   // target element(s) to be updated with server response 
+			dataType: 	   'json',
+			beforeSubmit:  showRequest,  // pre-submit callback 
+			success:       processJson  // post-submit callback 
+	 
+			// other available options: 
+			//url:       url         // override for form's 'action' attribute 
+			//type:      type        // 'get' or 'post', override for form's 'method' attribute 
+			//dataType:  null        // 'xml', 'script', or 'json' (expected server response type) 
+			//clearForm: true        // clear all form fields after successful submit 
+			//resetForm: true        // reset the form after successful submit 
+	 
+			// $.ajax options can be used here too, for example: 
+			//timeout:   3000 
+		}; 
+	 
+		// bind to the form's submit event 
+		$('#showtime-form').submit(function() { 
+			// inside event callbacks 'this' is the DOM element so we first 
+			// wrap it in a jQuery object and then invoke ajaxSubmit 
+			$(this).ajaxSubmit(options); 
+	 
+			// !!! Important !!! 
+			// always return false to prevent standard browser submit and page navigation 
+			return false; 
+		}); 
+	}); 
+	 
+	// pre-submit callback 
+	function showRequest(formData, jqForm, options) { 
+		// formData is an array; here we use $.param to convert it to a string to display it 
+		// but the form plugin does this for you automatically when it submits the data 
+		var queryString = $.param(formData); 
+	 
+		// jqForm is a jQuery object encapsulating the form element.  To access the 
+		// DOM element for the form do this: 
+		// var formElement = jqForm[0]; 
+	 
+		alert('About to submit: \n\n' + queryString); 
+	 
+		// here we could return false to prevent the form from being submitted; 
+		// returning anything other than false will allow the form submit to continue 
+		return true; 
+	} 
+	 
+	// post-submit callback 
+	function showResponse(responseText, statusText, xhr, $form)  { 
+		// for normal html responses, the first argument to the success callback 
+		// is the XMLHttpRequest object's responseText property 
+	 
+		// if the ajaxSubmit method was passed an Options Object with the dataType 
+		// property set to 'xml' then the first argument to the success callback 
+		// is the XMLHttpRequest object's responseXML property 
+	 
+		// if the ajaxSubmit method was passed an Options Object with the dataType 
+		// property set to 'json' then the first argument to the success callback 
+		// is the json data object returned by the server 
+	 
+		alert('status: ' + statusText + '\n\nresponseText: \n' + responseText + 
+			'\n\nThe output div should have already been updated with the responseText.'); 
+	} 
+	
+	function processJson(data) { 
+    // 'data' is the json object returned from the server 
+    alert(data.message); 
+}
+	
+</script> 
+
+<style type="text/css">
+
+    body, html{
+        margin:0;
+        padding:0;
+        background:false;
+		background:#000000 url(gradB.gif) repeat-x 0 top;
+    }
+	.header{
+		padding-top:40px;
+		padding-bottom:10px;
+		width:auto;
+		text-align:center;
+	}
+    .frame{
+		text-align:center;
+        margin:2px auto;
+		width:750px;
+		height:480px;
+        color:#000000;
+        font-family:Verdana;
+        font-size:10px;
+		background:url(theater.jpg) bottom;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		overflow:hidden;
+		
+    }
+	.formFrame {
+        padding:5px;
+		margin-top:350px;
+		width:auto;
+		height:85px;
+		color:#FFFFFF;
+        font-family:Verdana;
+        font-size:12px;
+		background:url(gradCandyApple.gif);
+		text-align:center;
+		
+	}
+	.vimeoEmbed{
+		padding:5px;
+		width:auto;
+		text-align:center;
+		background-color:#000;
+		
+		  /* for IE */
+		  /*filter:alpha(opacity=60);*/
+		  /* CSS3 standard */
+		  /*opacity:0.6;*/
+	}
+	
+	.signUp {
+		margin-left:5px;
+		float:left;
+		padding:5px;
+	}
+	
+	.mobileInput {
+		margin-left:10px;
+		padding-top:10px;
+		float:left;
+		font-family:Verdana, Geneva, sans-serif;
+		font-size:9px;
+		color:#FFFFFF;
+	}
+	
+	.emailInput {
+		margin-left:10px;
+		padding-top:10px;
+		float:left;
+	}
+	
+	.cityInput {
+		margin-left:10px;
+		padding-top:10px;
+		float:left;
+	}
+	
+	.submit{
+		margin-right:10px;
+		padding-top:10px;
+		float:right;
+	}
+	
+	
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+	<img src="header.png" />
+</div>
+
+    <div class="frame">
+        
+        <div class="formFrame">
+        
+                <form id="showtime-form" class="showtime-form" action="json-echo.php" method="post" accept-charset="utf-8">
+                    
+                    	<div class="signUp"><img src="signUp.png" /></div>
+                    
+                        <div class="mobileInput">
+                            <label><img src="mobilephone.png" /></label><br />
+                            <input type="text" name="phone" maxlength="10"/><br />
+                            just the numbers (10 digits)
+                        </div>
+                        
+                        <div class="emailInput">   
+                            <label><img src="email.png" /></label><br />
+                            <input type="text" name="email"/>
+                        </div>
+                        
+                        <div class="cityInput">   
+                        	<label><img src="yourcity.png" /></label><br /> 
+                            <select class="dropdown">
+                                <option>San Francisco</option>
+                                <option>Los Angeles</option>
+                                <option>New Orleans</option>
+                                <option>Seattle</option>
+                                <option>New York</option>
+                                <option>Vegas</option>
+                                <option>Tokyo</option>
+                                <option>Paris</option>
+                            </select> 
+                        </div>
+                    
+                        <div class="submit">
+                            <input type="image" src="submitUp.png">
+                        </div>
+                    
+                </form>
+                
+        	</div>
+            
+        </div>
+        
+	</div>
+    
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww17260\viewh12560\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 SHOWTIME \
+powered by Twilio\
+written by Derrek Wayne\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 $showName = "Enter Sillyland Berlesque";\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul \ulc0 UX\ulnone \
+\
+1. Registration \
+\
+Select from the users database where registered != true, for every row, send:\
+\
+Hello from $showName! Thank you for registering. We will remind you when tickets become available in $city.\
+\
+2. One week out\
+\
+Good evening. One week from tonight, $showName presents a show at $venue. Would you like to reserve free tickets? Please respond with yes or no.\
+\
+	yes, or anything else > Great! We are now holding tickets for you and your guest. What is your name?\
+\
+		$name > Cheers $name! You +1 are confirmed for $showDate at $time, $venue.\
+\
+	no > Catch you next time, cowboy.\
+\
+3. 24 Hours out\
+\
+$reserved == true > Hello from $showName! You and a guest are confirmed to attend the show tomorrow night at $showDate at $time, $venue.\
+\
+$unreserved == false > Good evening. Tomorrow night, $showName presents a show at  $time, at $venue. Would you like to reserve free tickets? Please respond with yes or no.\
+\
+	yes, or anything else > Great! We are now holding tickets for you and your guest. What is your name?\
+\
+		$name > Cheers $name! You +1 are confirmed for $showDate at $time, $venue.\
+\
+	no > See you next time, space cowboy.\
+\
+\ul OBJECTS & ALGORITHMS\ulnone \
+\
+a user : $name, $city, $email, $mobileNumber, $notified\
+addUser(unknown, $city, $email, $mobileNumber, false)\
+\
+show details: $showDate, $time, $venue, $address, $admissionPrice\
+ticket details: standing room, table\
+\
+\
+ChronRegistration.php runs every minute \
+Select from the users database where notified != true, for every row, send:\
+\
+Hello from $showName! Thank you for registering. We will let you know you when tickets become available in $city.\
+\
+\
+ChronReservations.php runs every evening at 6pm\
+Select from the shows database where showDate - 7days = today's date\
+for every show returned, make a Twilio SMS request to the people who live in the city where the show is with this script:\
+\
+	Good evening. One week from tonight, $showName presents a show at $venue. Would you like to reserve free tickets? Please respond with yes or no.\
+\
+	yes, or anything else > Great! We are now holding tickets for you and your guest. What is your name?\
+\
+		$name > Cheers $name! You +1 are confirmed for $showDate at $time, $venue.\
+\
+	no > See you next time, space cowboy.\
+\
+Select from the shows database where showDate = today's date\
+for every show returned, make a Twilio SMS request to the people who live in the city where the show is with this script:\
+\
+	$reserved == true > Hello from $showName! You and a guest are confirmed to attend the show tomorrow night at $showDate at $time, $venue.\
+\
+	$unreserved == false > Good evening. Tomorrow night, $showName presents a show at  $time, at $venue. Would you like to reserve free tickets? Please respond with yes or no.\
+\
+	yes, or anything else > Great! We are now holding tickets for you and your guest. What is your name?\
+\
+		$name > Cheers $name! You +1 are confirmed for $showDate at $time, $venue.\
+\
+	no > Catch you next time, cowboy.\
+}
